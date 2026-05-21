@@ -7,7 +7,6 @@
 <title>Campanha Microlins</title>
 
 <style>
-
 *{
   margin:0;
   padding:0;
@@ -38,24 +37,22 @@ body{
 /* vídeo */
 video{
   width:100%;
+  height:auto;
   display:block;
-  border-radius:25px;
-
-  /* mostra melhor o corpo */
-  object-fit:contain;
   background:#000;
 }
 
-/* camada escura */
+/* overlay */
 .overlay{
   position:absolute;
   inset:0;
   background:linear-gradient(
     to top,
-    rgba(0,0,0,.40),
-    rgba(0,0,0,.08)
+    rgba(0,0,0,.45),
+    rgba(0,0,0,.10)
   );
   z-index:1;
+  pointer-events:none;
 }
 
 /* emojis topo e baixo */
@@ -70,119 +67,44 @@ video{
   font-size:34px;
 }
 
-.emoji-top{
-  top:12px;
-}
+.emoji-top{ top:12px; }
+.emoji-bottom{ bottom:12px; }
 
-.emoji-bottom{
-  bottom:12px;
-}
-
-/* animação mais lenta */
 .emoji{
   animation:float 4s ease-in-out infinite;
 }
 
-.emoji:nth-child(2){
-  animation-delay:.5s;
-}
-
-.emoji:nth-child(3){
-  animation-delay:1s;
-}
-
-.emoji:nth-child(4){
-  animation-delay:1.5s;
-}
-
-.emoji:nth-child(5){
-  animation-delay:2s;
-}
-
 @keyframes float{
-  0%{
-    transform:translateY(0) scale(1);
-    opacity:1;
-  }
-
-  50%{
-    transform:translateY(-10px) scale(1.12);
-    opacity:.9;
-  }
-
-  100%{
-    transform:translateY(0) scale(1);
-    opacity:1;
-  }
+  0%,100%{transform:translateY(0) scale(1);}
+  50%{transform:translateY(-10px) scale(1.1);}
 }
 
-/* emojis flutuando pela tela */
+/* floating emojis */
 .floating-emoji{
   position:absolute;
   font-size:30px;
-  z-index:2;
+  z-index:0;
   opacity:.7;
   animation:drift linear infinite;
 }
 
-/* posições diferentes */
-.e1{
-  left:5%;
-  animation-duration:12s;
-}
-
-.e2{
-  left:20%;
-  animation-duration:15s;
-  animation-delay:2s;
-}
-
-.e3{
-  left:40%;
-  animation-duration:18s;
-  animation-delay:4s;
-}
-
-.e4{
-  left:65%;
-  animation-duration:14s;
-  animation-delay:1s;
-}
-
-.e5{
-  left:85%;
-  animation-duration:16s;
-  animation-delay:3s;
-}
+.e1{left:5%; animation-duration:12s;}
+.e2{left:20%; animation-duration:15s;}
+.e3{left:40%; animation-duration:18s;}
+.e4{left:65%; animation-duration:14s;}
+.e5{left:85%; animation-duration:16s;}
 
 @keyframes drift{
-  from{
-    transform:translateY(100vh) rotate(0deg);
-  }
-
-  to{
-    transform:translateY(-120vh) rotate(360deg);
-  }
+  from{transform:translateY(100vh);}
+  to{transform:translateY(-120vh);}
 }
 
 /* responsivo */
 @media(max-width:600px){
-
-  .video-container{
-    width:92%;
-  }
-
-  .emoji-top,
-  .emoji-bottom{
-    font-size:24px;
-    gap:10px;
-  }
-
-  .floating-emoji{
-    font-size:22px;
-  }
+  .video-container{width:92%;}
+  .emoji-top,.emoji-bottom{font-size:24px;}
+  .floating-emoji{font-size:22px;}
 }
-
 </style>
 </head>
 
@@ -197,10 +119,8 @@ video{
 
 <div class="video-container">
 
-  <!-- overlay -->
   <div class="overlay"></div>
 
-  <!-- emojis topo -->
   <div class="emoji-top">
     <span class="emoji">🎓</span>
     <span class="emoji">💙</span>
@@ -209,13 +129,11 @@ video{
     <span class="emoji">📚</span>
   </div>
 
-  <!-- vídeo -->
-  <video autoplay muted loop playsinline>
-    <source src="video.mp4" type="video/mp4">
-    Seu navegador não suporta vídeo.
+  <!-- 🔥 VÍDEO FORÇANDO COMPATIBILIDADE -->
+  <video id="video" autoplay muted loop playsinline controls preload="auto">
+    <source src="./video.mp4" type="video/mp4">
   </video>
 
-  <!-- emojis embaixo -->
   <div class="emoji-bottom">
     <span class="emoji">✨</span>
     <span class="emoji">🅼</span>
@@ -225,6 +143,22 @@ video{
   </div>
 
 </div>
+
+<!-- 🔥 script força autoplay (resolve GitHub + mobile) -->
+<script>
+const video = document.getElementById('video');
+
+function tryPlay(){
+  video.play().catch(() => {
+    console.log("Autoplay bloqueado — aguardando interação");
+  });
+}
+
+document.addEventListener("click", tryPlay);
+document.addEventListener("touchstart", tryPlay);
+
+window.addEventListener("load", tryPlay);
+</script>
 
 </body>
 </html>
