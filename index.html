@@ -1,85 +1,230 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Campanha Microlins</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      margin: 0;
-      background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      font-family: Arial, sans-serif;
-      overflow: hidden;
-    }
+<title>Campanha Microlins</title>
 
-    .video-container {
-      position: relative;
-      width: 90%;
-      max-width: 900px;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 0 30px rgba(255,255,255,0.2);
-    }
+<style>
 
-    video {
-      width: 100%;
-      display: block;
-      border-radius: 20px;
-    }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-    .emoji-top,
-    .emoji-bottom {
-      position: absolute;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      font-size: 32px;
-      z-index: 2;
-      animation: pulse 1.5s infinite;
-    }
+body{
+  background:#000;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  font-family:Arial, sans-serif;
+}
 
-    .emoji-top {
-      top: 10px;
-    }
+.video-container{
+  position:relative;
+  width:75%;
+  max-width:700px;
+  border-radius:25px;
+  overflow:hidden;
+  box-shadow:
+    0 0 20px rgba(0,153,255,.4),
+    0 0 60px rgba(0,153,255,.2);
+}
 
-    .emoji-bottom {
-      bottom: 10px;
-    }
+/* vídeo */
+video{
+  width:100%;
+  display:block;
+  border-radius:25px;
 
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.1); opacity: 0.8; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-  </style>
+  /* mostra melhor o corpo */
+  object-fit:contain;
+  background:#000;
+}
+
+/* camada escura */
+.overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    to top,
+    rgba(0,0,0,.40),
+    rgba(0,0,0,.08)
+  );
+  z-index:1;
+}
+
+/* emojis topo e baixo */
+.emoji-top,
+.emoji-bottom{
+  position:absolute;
+  width:100%;
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  z-index:3;
+  font-size:34px;
+}
+
+.emoji-top{
+  top:12px;
+}
+
+.emoji-bottom{
+  bottom:12px;
+}
+
+/* animação mais lenta */
+.emoji{
+  animation:float 4s ease-in-out infinite;
+}
+
+.emoji:nth-child(2){
+  animation-delay:.5s;
+}
+
+.emoji:nth-child(3){
+  animation-delay:1s;
+}
+
+.emoji:nth-child(4){
+  animation-delay:1.5s;
+}
+
+.emoji:nth-child(5){
+  animation-delay:2s;
+}
+
+@keyframes float{
+  0%{
+    transform:translateY(0) scale(1);
+    opacity:1;
+  }
+
+  50%{
+    transform:translateY(-10px) scale(1.12);
+    opacity:.9;
+  }
+
+  100%{
+    transform:translateY(0) scale(1);
+    opacity:1;
+  }
+}
+
+/* emojis flutuando pela tela */
+.floating-emoji{
+  position:absolute;
+  font-size:30px;
+  z-index:2;
+  opacity:.7;
+  animation:drift linear infinite;
+}
+
+/* posições diferentes */
+.e1{
+  left:5%;
+  animation-duration:12s;
+}
+
+.e2{
+  left:20%;
+  animation-duration:15s;
+  animation-delay:2s;
+}
+
+.e3{
+  left:40%;
+  animation-duration:18s;
+  animation-delay:4s;
+}
+
+.e4{
+  left:65%;
+  animation-duration:14s;
+  animation-delay:1s;
+}
+
+.e5{
+  left:85%;
+  animation-duration:16s;
+  animation-delay:3s;
+}
+
+@keyframes drift{
+  from{
+    transform:translateY(100vh) rotate(0deg);
+  }
+
+  to{
+    transform:translateY(-120vh) rotate(360deg);
+  }
+}
+
+/* responsivo */
+@media(max-width:600px){
+
+  .video-container{
+    width:92%;
+  }
+
+  .emoji-top,
+  .emoji-bottom{
+    font-size:24px;
+    gap:10px;
+  }
+
+  .floating-emoji{
+    font-size:22px;
+  }
+}
+
+</style>
 </head>
+
 <body>
 
-  <div class="video-container">
+<!-- emojis flutuando -->
+<div class="floating-emoji e1">🎓</div>
+<div class="floating-emoji e2">💙</div>
+<div class="floating-emoji e3">🚀</div>
+<div class="floating-emoji e4">📚</div>
+<div class="floating-emoji e5">✨</div>
 
-    <!-- Emojis topo -->
-    <div class="emoji-top">
-      🎓 💙 🅼 🚀 📚
-    </div>
+<div class="video-container">
 
-    <!-- Vídeo -->
-    <video autoplay muted loop playsinline>
-      <source src="SEU-VIDEO.mp4" type="video/mp4">
-      Seu navegador não suporta vídeo.
-    </video>
+  <!-- overlay -->
+  <div class="overlay"></div>
 
-    <!-- Emojis embaixo -->
-    <div class="emoji-bottom">
-      ✨ 🅼 🔥 🎯 💼
-    </div>
-
+  <!-- emojis topo -->
+  <div class="emoji-top">
+    <span class="emoji">🎓</span>
+    <span class="emoji">💙</span>
+    <span class="emoji">🅼</span>
+    <span class="emoji">🚀</span>
+    <span class="emoji">📚</span>
   </div>
+
+  <!-- vídeo -->
+  <video autoplay muted loop playsinline>
+    <source src="video.mp4" type="video/mp4">
+    Seu navegador não suporta vídeo.
+  </video>
+
+  <!-- emojis embaixo -->
+  <div class="emoji-bottom">
+    <span class="emoji">✨</span>
+    <span class="emoji">🅼</span>
+    <span class="emoji">🔥</span>
+    <span class="emoji">🎯</span>
+    <span class="emoji">💼</span>
+  </div>
+
+</div>
 
 </body>
 </html>
