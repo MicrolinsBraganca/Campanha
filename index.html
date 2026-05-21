@@ -40,6 +40,7 @@ video{
   height:auto;
   display:block;
   background:#000;
+  object-fit:contain;
 }
 
 /* overlay */
@@ -129,8 +130,8 @@ video{
     <span class="emoji">📚</span>
   </div>
 
-  <!-- 🔥 VÍDEO FORÇANDO COMPATIBILIDADE -->
-  <video id="video" autoplay muted loop playsinline controls preload="auto">
+  <!-- VÍDEO -->
+  <video id="video" autoplay loop playsinline controls preload="auto">
     <source src="./video.mp4" type="video/mp4">
   </video>
 
@@ -144,9 +145,10 @@ video{
 
 </div>
 
-<!-- 🔥 script força autoplay (resolve GitHub + mobile) -->
 <script>
 const video = document.getElementById('video');
+
+video.volume = 1;
 
 function tryPlay(){
   video.play().catch(() => {
@@ -156,7 +158,6 @@ function tryPlay(){
 
 document.addEventListener("click", tryPlay);
 document.addEventListener("touchstart", tryPlay);
-
 window.addEventListener("load", tryPlay);
 </script>
 
